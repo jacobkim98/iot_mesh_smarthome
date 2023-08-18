@@ -11,11 +11,9 @@ libraries (using the library manager):
 
 Usage:
 1. Power up the Raspberry Pi and prepare to receive slave node data via MQTT through the master node by using the following command:
-
   mosquitto_sub -h 203.252.106.154 -t "iot/mesh/#" -u "iot" -P "csee1414"
 2. In the 'mesh_data.ino' file, slave node names are configured. If you want to connect multiple slave nodes to a master node, adjust the value of int nodeNumber = (num); in the file. Ensure that each slave node has a unique value. The default value in the 'mesh_data.ino' file is 3. ('mesh_data.ino' => slave node, 'mqttBridge' => master node)
 3. To enable both station and access point modes on the ESP8266, modify 'painlessMeshSTA.cpp' within the painlessMesh library. 
-
   Change line 56 from WiFi.scanNetworks(true, true, mesh->_meshChannel); to WiFi.scanNetworks(true, true);.
 4. After running Hass on the Raspberry Pi, you can observe changing values on the Hass webpage. To integrate the changes, update the '~/.homeassistant/configuration.yaml' file, which corresponds to the 'configuration.yaml' file in the Design section.
 
