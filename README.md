@@ -35,14 +35,14 @@ By following these steps, you can establish a mesh network, communicate data bet
 
 
 ### Result
-master node
+#### master node
 ![image](https://github.com/jacobkim98/iot_mesh_smarthome/assets/142479612/9c9e35d8-a861-4bec-b557-8ee6f52ce163)
 
-slave node
+#### slave node
 ![image](https://github.com/jacobkim98/iot_mesh_smarthome/assets/142479612/cdd54be9-865d-4ffb-bd4c-51bdd505bf3e)
 
-mqtt
+#### mqtt
 ![image](https://github.com/jacobkim98/iot_mesh_smarthome/assets/142479612/bdd4de57-cfaa-4c4c-a52d-b4793a68d4d6)
 
-hass
+#### hass
 ![image](https://github.com/jacobkim98/iot_mesh_smarthome/assets/142479612/0568dabb-3ca2-4066-9b29-ba4acbef615e)
