@@ -18,3 +18,19 @@ This guide demonstrates setting up a mesh network using painless mesh with ESP82
 4. After running Hass on the Raspberry Pi, you can observe changing values on the Hass webpage. To integrate the changes, update the '~/.homeassistant/configuration.yaml' file, which corresponds to the 'configuration.yaml' file in the Design section.
 
 By following these steps, you can establish a mesh network, communicate data between master and slave nodes, and interact with Home Assistant for monitoring and control.
+
+### libraries:
+- DHT22 - DHT sensor library for ESPx
+- OLED – adafruit_SSD1306, adafruit_gfx
+- PainlessMash.h
+- PubSubClient.h
+- Arduino_JSON.h
+
+### Device:
+- LED
+- DHT22
+- Relay(USBLED)
+- CDS
+- ESP8266
+
+![image](https://github.com/jacobkim98/iot_mesh_smarthome/assets/142479612/0568dabb-3ca2-4066-9b29-ba4acbef615e)
