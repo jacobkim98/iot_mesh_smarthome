@@ -1,6 +1,7 @@
 # iot_mesh_smarthome
 
 Introduction:
+
 This guide demonstrates setting up a mesh network using painless mesh with ESP8266, dividing it into master and slave nodes. The mesh network is established, and temperature, humidity, and light data are transmitted to Home Assistant (Hass) through MQTT communication with a Raspberry Pi. Conversely, commands received from Hass can be relayed to individual slave nodes.
 
 libraries (using the library manager):
