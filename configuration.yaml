@@ -1,0 +1,170 @@
+
+# Loads default set of integrations. Do not remove.
+default_config:
+
+homeassistant:
+  name: khj
+  latitude: 36.103295
+  longitude: 129.387009
+  elevation: 30
+
+mqtt:
+  sensor:
+    - state_topic: "iot/nth405/dht22_t"
+      name: nth405_temperature
+    - state_topic: "iot/nth405/dht22_h"
+      name: nth405_humidity
+    - state_topic: "iot/nth405/cds"
+      name: nth405_light_intensity
+    - state_topic: "iot/21901019/dht22_t"
+      name: 21901019_temperature
+    - state_topic: "iot/21901019/dht22_h"
+      name: 21901019_humidity
+    - state_topic: "iot/21901019/cds"
+      name: khj_light_intensity
+    - state_topic: "iot/mesh/2/dht22_t"
+      name: room2_temperature
+    - state_topic: "iot/mesh/2/dht22_h"
+      name: room2_humidity
+    - state_topic: "iot/mesh/2/cds"
+      name: room2_light_intensity
+    - state_topic: "iot/mesh/3/dht22_t"
+      name: room3_temperature
+    - state_topic: "iot/mesh/3/dht22_h"
+      name: room3_humidity
+    - state_topic: "iot/mesh/3/cds"
+      name: room3_light_intensity
+  switch:
+    - name: "USB LED"
+      state_topic: "iot/nth405"
+      command_topic: "iot/nth405"
+      qos: 0
+      payload_on: "usbledon"
+      payload_off: "usbledoff"
+      retain: false
+    - name: "Room 2"
+      state_topic: "iot/mesh"
+      command_topic: "iot/mesh"
+      qos: 0
+      payload_on: "2_usbledon"
+      payload_off: "2_usbledoff"
+      retain: false
+    - name: "Room 3"
+      state_topic: "iot/mesh"
+      command_topic: "iot/mesh"
+      qos: 0
+      payload_on: "3_usbledon"
+      payload_off: "3_usbledoff"
+      retain: false
+  light:
+    - name: "mesh_usb_led"
+      state_topic: "iot/mesh"
+      command_topic: "iot/mesh"
+      qos: 0
+      payload_on: "usbledon"
+      payload_off: "usbledoff"
+      retain: false
+#mqtt:
+#  sensor:
+#    - state_topic: "iot/nth405/dht22_t"
+#      name: nth405_temperature
+#    - state_topic: "iot/nth405/dht22_h"
+#      name: nth405_humidity
+#    - state_topic: "iot/nth405/cds"
+#      name: nth405_light_intensity
+#    - state_topic: "iot/21901019/dht22_t"
+#      name: 21901019_temperature
+#    - state_topic: "iot/21901019/dht22_h"
+#      name: 21901019_humidity
+#    - stare_topic: "iot/21901019/cds"
+#      name: 21901019_light_intensity
+
+#mqtt:
+  #broker: 203.252.106.154
+  #port: 1883
+  #username: iot
+  #password: csee1414
+
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+#automation: !include automations.yaml
+#script: !include scripts.yaml
+#scene: !include scenes.yaml
+
+group:
+  default_view:
+    name: "DHT22"
+    entities:
+      - sensor.nth405_temperature
+      - sensor.nth405_humidity
+    name: "21901019_DHT22"
+    entities:
+      - sensor.21901019_temperature
+      - sensor.21901019_humidity
+  NTH405_cds:
+    name: "Light intensity"
+    icon: mdi:home-automation
+    entities:
+      - sensor.nth405_light_intensity
+    name: "khj_light_intensity"
+    icon: mdi:home-automation
+    entities:
+      - sensor.khj_light_intensity
+  Room2:
+    name: "Room2"
+    entities:
+      - sensor.room2_temperature
+      - sensor.room2_humidity
+      - sensor.room2_light_intensity
+  Room3:
+    name: "Room3"
+    entities:
+      - sensor.room3_temperature
+      - sensor.room3_humidity
+      - sensor.room3_light_intensity
+
+automation:
+  - alias: 'USBLED on control'
+    initial_state: True
+    trigger:
+      - platform: template
+        value_template: "{% if states.sensor.khj_light_intensity.state | float < 400 %} true {% endif %}"
+    action:
+      - service: light.turn_on
+        target:
+          entity_id: light.usb_led
+      - service: notify.notify
+
+  - alias: 'USBLED OFF control'
+    trigger:
+      - platform: template
+        value_template: "{% if states.sensor.khj_light_intensity.state | float > 600 %} true {% endif %}"
+    action:
+      - service: light.turn_off
+        target:
+          entitiy_id: light.usb_led
+      - service: notify.notify
+
+  - alias: 'USBLED on control'
+    initial_state: True
+    trigger:
+      - platform: template
+        value_template: "{% if states.sensor.room3_light_intensity.state | float < 400 %} true {% endif %}"
+    action:
+      - service: light.turn_on
+        target:
+          entity_id: light.mesh_usb_led
+      - service: notify.notify
+
+  - alias: 'USBLED OFF control'
+    trigger:
+      - platform: template
+        value_template: "{% if states.sensor.room3_light_intensity.state | float > 600 %} true {% endif %}"
+    action:
+      - service: light.turn_off
+        target:
+          entitiy_id: light.mesh_usb_led
+      - service: notify.notify
